@@ -74,7 +74,8 @@ namespace Draw
 
             RectangleShape rect = new RectangleShape(new Rectangle(x, y, 100, 300));
             rect.FillColor = Color.White;
-          
+            rect.BorderColor = Color.Black;
+            rect.BorderWidth = 5;
             ShapeList.Add(rect);
         }
         public void AddRandomEllispe()
@@ -84,9 +85,9 @@ namespace Draw
             int y = rnd.Next(100, 600);
 
             EllipseShape ellipse = new EllipseShape(new Rectangle(x, y, 100, 300));
-           
+            ellipse.BorderColor = Color.Black;
             ellipse.FillColor = Color.White;
-           
+            ellipse.BorderWidth = 5;
             ShapeList.Add(ellipse);
         }
         /// <summary>
@@ -112,8 +113,21 @@ namespace Draw
                 item.FillColor = color;
             }
         }
-      
-       
+        public void SetBorderWight(int wight)
+        {
+            foreach (var item in SelectionShape)
+
+            {
+                item.BorderWidth = wight;
+            }
+        }
+        public void SetFillBorder(Color color)
+        {
+            foreach (var item in SelectionShape)
+            {
+                item.BorderColor = color;
+            }
+        }
         public override void Draw(Graphics grfx)
         {
             base.Draw(grfx);
@@ -123,7 +137,57 @@ namespace Draw
 
             }
         }
-    
+        public void UngroupSelected()
+        {
+            List<Shape> OldSelection = new List<Shape>(SelectionShape);
+            SelectionShape.Clear();
+            foreach (var item in OldSelection)
+            {
+                if (item is GroupShape)
+                {
+                    GroupShape group = (GroupShape)item;
+                    foreach (var subItem in group.SubItems)
+                    {
+                        SelectionShape.Add(subItem);
+                        ShapeList.Add(subItem);
+                    }
+
+                    ShapeList.Remove(item);
+                }
+            }
+        }
+        public void GroupSelected()
+        {
+            if (SelectionShape.Count < 2) return;
+
+            float minX = float.PositiveInfinity;
+            float minY = float.PositiveInfinity;
+            float maxX = float.NegativeInfinity;
+            float maxY = float.NegativeInfinity;
+
+            foreach (var item in SelectionShape)
+            {
+                if (minX > item.Location.X) minX = item.Location.X;
+                if (minY > item.Location.Y) minY = item.Location.Y;
+                if (maxX < item.Location.X + item.Width) maxX = item.Location.X + item.Width;
+                if (maxY < item.Location.Y + item.Height) maxY = item.Location.Y + item.Height;
+            }
+
+            var group = new GroupShape(new RectangleF(minX, minY, maxX - minX, maxY - minY));
+
+            group.SubItems = SelectionShape;
+
+            SelectionShape = new List<Shape>();
+
+            foreach (var item in group.SubItems)
+            {
+                ShapeList.Remove(item);
+            }
+
+            SelectionShape.Add(group);
+
+            ShapeList.Add(group);
+        }
         public void ChangeCoordinate(PointF p)
         {
             float diffX = p.X - lastLocation.X;
@@ -149,7 +213,18 @@ namespace Draw
                 }
             }
         }
-      
+        public void DeleteSelected()
+        {
+            foreach (var item in SelectionShape)
+                ShapeList.Remove(item);
+            SelectionShape = new List<Shape>();
+        }
+
+        public void SelectAll()
+        {
+            SelectionShape = new List<Shape>(ShapeList);
+        }
+
         public void SaveAs(string fileName)
         {
             FileStream fs = new FileStream(fileName, FileMode.Create);

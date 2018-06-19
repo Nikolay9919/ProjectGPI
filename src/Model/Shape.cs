@@ -34,20 +34,29 @@ namespace Draw
 		{
 			rectangle = rect;
 		}
-       
-      
+        private int borderwidht;
+        public int BorderWidth
+        {
+            get { return borderwidht; }
+            set { borderwidht = value; }
+        }
         public Shape(Shape shape)
 		{
 			this.Height = shape.Height;
 			this.Width = shape.Width;
 			this.Location = shape.Location;
-           
+            this.BorderWidth = shape.BorderWidth;
             this.rectangle = shape.rectangle;
 			
 			this.FillColor =  shape.FillColor;
 		}
         #endregion
-      
+        private Color borderColor;
+        public virtual Color BorderColor
+        {
+            get { return borderColor; }
+            set { borderColor = value; }
+        }
         #region Properties
 
         /// <summary>

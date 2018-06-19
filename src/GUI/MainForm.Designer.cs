@@ -31,6 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.itemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ungroupSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shapeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,9 +47,13 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
+            this.button4 = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.colorDialog2 = new System.Windows.Forms.ColorDialog();
+            this.button5 = new System.Windows.Forms.Button();
             this.viewPort = new Draw.DoubleBufferedPanel();
+            this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.mainMenu.SuspendLayout();
             this.speedMenu.SuspendLayout();
@@ -67,17 +74,44 @@
             // itemToolStripMenuItem
             // 
             this.itemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.groupSelectToolStripMenuItem,
+            this.ungroupSelectToolStripMenuItem,
+            this.deleteToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.importToolStripMenuItem});
             this.itemToolStripMenuItem.Name = "itemToolStripMenuItem";
             this.itemToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.itemToolStripMenuItem.Text = "Item";
             // 
+            // groupSelectToolStripMenuItem
+            // 
+            this.groupSelectToolStripMenuItem.Name = "groupSelectToolStripMenuItem";
+            this.groupSelectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.groupSelectToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.groupSelectToolStripMenuItem.Text = "Group Select";
+            this.groupSelectToolStripMenuItem.Click += new System.EventHandler(this.groupSelectToolStripMenuItem_Click);
+            // 
+            // ungroupSelectToolStripMenuItem
+            // 
+            this.ungroupSelectToolStripMenuItem.Name = "ungroupSelectToolStripMenuItem";
+            this.ungroupSelectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.ungroupSelectToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.ungroupSelectToolStripMenuItem.Text = "Ungroup Select";
+            this.ungroupSelectToolStripMenuItem.Click += new System.EventHandler(this.ungroupSelectToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -85,7 +119,7 @@
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             this.importToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.importToolStripMenuItem.Text = "Import";
             // 
             // shapeToolStripMenuItem
@@ -101,7 +135,7 @@
             // 
             this.rectanglrToolStripMenuItem.Name = "rectanglrToolStripMenuItem";
             this.rectanglrToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.rectanglrToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rectanglrToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.rectanglrToolStripMenuItem.Text = "Rectangle";
             this.rectanglrToolStripMenuItem.Click += new System.EventHandler(this.rectangleToolStripMenuItem_Click);
             // 
@@ -109,7 +143,7 @@
             // 
             this.ellipseToolStripMenuItem.Name = "ellipseToolStripMenuItem";
             this.ellipseToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.ellipseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ellipseToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.ellipseToolStripMenuItem.Text = "Ellipse";
             this.ellipseToolStripMenuItem.Click += new System.EventHandler(this.ellipseToolStripMenuItem_Click);
             // 
@@ -179,6 +213,34 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // maskedTextBox2
+            // 
+            this.maskedTextBox2.Location = new System.Drawing.Point(0, 115);
+            this.maskedTextBox2.Name = "maskedTextBox2";
+            this.maskedTextBox2.Size = new System.Drawing.Size(137, 20);
+            this.maskedTextBox2.TabIndex = 8;
+            this.maskedTextBox2.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox2_MaskInputRejected);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(0, 331);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(148, 33);
+            this.button4.TabIndex = 10;
+            this.button4.Text = "Change Color";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(0, 394);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(148, 37);
+            this.button5.TabIndex = 11;
+            this.button5.Text = "Change Color Border";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // viewPort
             // 
             this.viewPort.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -192,10 +254,24 @@
             this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseMove);
             this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseUp);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(3, 164);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(134, 35);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "Border Size";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button5);
+            this.panel1.Controls.Add(this.button4);
+            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.maskedTextBox2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(672, 49);
             this.panel1.Name = "panel1";
@@ -221,6 +297,7 @@
             this.speedMenu.ResumeLayout(false);
             this.speedMenu.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -239,10 +316,17 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox2;
+        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.ColorDialog colorDialog2;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ToolStripMenuItem groupSelectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ungroupSelectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Panel panel1;
     }
 }

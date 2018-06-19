@@ -166,7 +166,32 @@ namespace Draw
             }
         }
 
-    
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (colorDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                dialogProcessor.SetFillBorder(colorDialog2.Color);
+                viewPort.Invalidate();
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.DeleteSelected();
+            viewPort.Invalidate();
+        }
+
+        private void groupSelectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.GroupSelected();
+            viewPort.Invalidate();
+        }
+
+        private void ungroupSelectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.UngroupSelected();
+            viewPort.Invalidate();
+        }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -178,6 +203,11 @@ namespace Draw
 
         }
 
-     
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            int value = Int32.Parse(maskedTextBox2.Text);
+            dialogProcessor.SetBorderWight(value);
+            viewPort.Invalidate();
+        }
     }
 }
